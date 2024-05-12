@@ -26,18 +26,15 @@ export default function DataProvider({
     const [counter, setCounter] = useState(0);
     const [showCart, setShowCart] = useState(false);
     const [selectedImage, setSelectedImage] = useState(product.images[0].thumb);
+    const value: DataContextType = {
+        selectedImage,
+        setSelectedImage,
+        counter,
+        setCounter,
+        showCart,
+        setShowCart,
+    };
     return (
-        <DataContext.Provider
-            value={{
-                counter,
-                setCounter,
-                showCart,
-                setShowCart,
-                selectedImage,
-                setSelectedImage,
-            }}
-        >
-            {children}
-        </DataContext.Provider>
+        <DataContext.Provider value={value}>{children}</DataContext.Provider>
     );
 }

@@ -35,7 +35,10 @@ export default function Hero() {
                                     selectedImage === item.thumb &&
                                     "border-2 border-primary"
                                 } cursor-pointer rounded-lg overflow-hidden bg-accent`}
-                                onClick={() => setSelectedImage(item.thumb)}
+                                onClick={() => {
+                                    console.log(item.thumb);
+                                    setSelectedImage(item.thumb);
+                                }}
                             >
                                 <img
                                     className={`${
