@@ -1,7 +1,7 @@
-import { images } from "@/assets/images";
 import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
 import { useData } from "./data";
+import { product } from "./constant";
 
 export default function CartItem() {
     const { counter, showCart, setCounter, setShowCart } = useData();
@@ -11,7 +11,7 @@ export default function CartItem() {
                 <div className="flex items-center justify-between w-full gap-4 my-4 ">
                     <img
                         className=" aspect-square rounded-md object-cover max-w-[60px] "
-                        src={images.thumb1}
+                        src={product.images[0].image}
                         alt="thumbnail"
                     />
                     <div>

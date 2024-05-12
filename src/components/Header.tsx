@@ -1,5 +1,4 @@
-import { images } from "@/assets/images";
-import { links } from "./constant";
+import { links, product } from "./constant";
 import { ShoppingCart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Mobile from "./Mobile";
@@ -23,7 +22,7 @@ export default function Header() {
                 <div className=" flex items-center gap-6 ">
                     <Mobile />
                     <a href="#">
-                        <img src={images.logo} alt="logo" />
+                        <img src={product.logo} alt="logo" />
                     </a>
                     <ul className=" md:flex gap-4 items-center hidden ">
                         {links.map((item) => (
@@ -85,7 +84,7 @@ export default function Header() {
 
                     <div className=" cursor-pointer rounded-full hover:outline outline-primary ">
                         <Avatar>
-                            <AvatarImage src={images.avator} />
+                            <AvatarImage src={product.avator} />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                     </div>
