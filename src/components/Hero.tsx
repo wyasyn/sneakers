@@ -7,7 +7,11 @@ import Box from "./Box";
 import { useData } from "./data";
 
 export default function Hero() {
-    const { setShowCart, selectedImage, setSelectedImage } = useData();
+    const { setShowCart, currentIndex, setCurrentIndex } = useData();
+
+    const goToSlide = (index: number) => {
+        setCurrentIndex(index);
+    };
     return (
         <section className=" py-8 lg:py-[7rem] container ">
             <div className=" grid gap-[3rem] lg:grid-cols-2 lg:gap-[5rem] max-w-[500px] lg:max-w-[900px] mx-auto ">
@@ -15,11 +19,22 @@ export default function Hero() {
                     <Dialog>
                         <DialogTrigger asChild>
                             <div className=" cursor-pointer ">
-                                <img
-                                    className=" rounded-xl object-cover "
-                                    src={selectedImage}
-                                    alt="image"
-                                />
+                                {product.images.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className={
+                                            index === currentIndex
+                                                ? "slide active"
+                                                : "hidden"
+                                        }
+                                    >
+                                        <img
+                                            className=" object-cover rounded-xl "
+                                            src={item.thumb}
+                                            alt={item.thumb}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -32,18 +47,16 @@ export default function Hero() {
                             <div
                                 key={idx}
                                 className={` ${
-                                    selectedImage === item.thumb &&
+                                    idx === currentIndex &&
                                     "border-2 border-primary"
                                 } cursor-pointer rounded-lg overflow-hidden bg-accent`}
                                 onClick={() => {
-                                    console.log(item.thumb);
-                                    setSelectedImage(item.thumb);
+                                    goToSlide(idx);
                                 }}
                             >
                                 <img
                                     className={`${
-                                        selectedImage === item.thumb &&
-                                        "opacity-50"
+                                        idx === currentIndex && "opacity-50"
                                     } rounded-md object-cover w-full h-full `}
                                     src={item.image}
                                     alt="image"

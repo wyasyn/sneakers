@@ -3,22 +3,21 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useData } from "./data";
 
 export default function Box() {
-    const { selectedImage, setSelectedImage } = useData();
-    const handleNext = () => {
-        const currentIndex = product.images.findIndex(
-            (img) => img.thumb === selectedImage
+    const { currentIndex, setCurrentIndex } = useData();
+    const goToNextSlide = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
         );
-        const nextIndex = (currentIndex + 1) % product.images.length;
-        setSelectedImage(product.images[nextIndex].thumb);
     };
 
-    const handlePrevious = () => {
-        const currentIndex = product.images.findIndex(
-            (img) => img.thumb === selectedImage
+    const goToPrevSlide = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
         );
-        const previousIndex =
-            (currentIndex - 1 + product.images.length) % product.images.length;
-        setSelectedImage(product.images[previousIndex].thumb);
+    };
+
+    const goToSlide = (index: number) => {
+        setCurrentIndex(index);
     };
     return (
         <div>
@@ -26,35 +25,50 @@ export default function Box() {
                 <div className=" cursor-pointer relative ">
                     <div
                         className=" absolute -left-3  text-black bg-background rounded-full aspect-square p-1 top-1/2 -translate-y-1/2 hover:text-primary "
-                        onClick={handlePrevious}
+                        onClick={goToPrevSlide}
                     >
                         <ChevronLeft />
                     </div>
                     <div
                         className=" absolute -right-3 text-black bg-background rounded-full aspect-square p-1 top-1/2 -translate-y-1/2 hover:text-primary "
-                        onClick={handleNext}
+                        onClick={goToNextSlide}
                     >
                         <ChevronRight />
                     </div>
-                    <img
-                        className=" rounded-xl object-cover "
-                        src={selectedImage}
-                        alt="image"
-                    />
+                    <div className=" cursor-pointer ">
+                        {product.images.map((item, index) => (
+                            <div
+                                key={index}
+                                className={
+                                    index === currentIndex
+                                        ? "slide active"
+                                        : "hidden"
+                                }
+                            >
+                                <img
+                                    className=" object-cover rounded-xl "
+                                    src={item.thumb}
+                                    alt={item.thumb}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className=" flex gap-[2rem] mt-[2.5rem] ">
                     {product.images.map((item, idx) => (
                         <div
                             key={idx}
                             className={` ${
-                                selectedImage === item.thumb &&
+                                idx === currentIndex &&
                                 "border-2 border-primary"
                             } cursor-pointer rounded-lg overflow-hidden bg-accent`}
-                            onClick={() => setSelectedImage(item.thumb)}
+                            onClick={() => {
+                                goToSlide(idx);
+                            }}
                         >
                             <img
                                 className={`${
-                                    selectedImage === item.thumb && "opacity-50"
+                                    idx === currentIndex && "opacity-50"
                                 } rounded-md object-cover w-full h-full `}
                                 src={item.image}
                                 alt="image"
